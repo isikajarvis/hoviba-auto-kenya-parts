@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { Car } from 'lucide-react';
 
 const BrandSlider = () => {
   const brands = [
