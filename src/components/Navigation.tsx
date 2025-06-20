@@ -23,7 +23,9 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Car className="h-8 w-8 text-red-600" />
-            <span className="text-2xl font-bold text-gray-900">HOVIBA AUTO</span>
+            <span className="text-2xl font-bold text-gray-900">
+              HOVIBA <span className="text-red-600">AUTO</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
