@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Phone, MessageCircle, Instagram, Facebook, MapPin, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import Footer from '@/components/Footer';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -14,10 +15,20 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Create mailto link with form data
+    const subject = `Contact Form Submission from ${formData.name}`;
+    const body = `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+    const mailtoLink = `mailto:hovibauto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
+      title: "Email Client Opened!",
+      description: "Your email client should open with the message pre-filled.",
     });
+    
     setFormData({ name: '', phone: '', email: '', message: '' });
   };
 
@@ -99,7 +110,7 @@ const Contact = () => {
               <div className="space-y-3">
                 {['Kitui', 'Embu', 'Mombasa', 'Kisumu'].map((location) => (
                   <div key={location} className="flex items-center space-x-3">
-                    <MapPin className="w-5 h-5 text-red-600" />
+                    <MapPin className="w-5 h-5 text-red-600 animate-pulse" />
                     <span className="text-gray-700">{location}</span>
                   </div>
                 ))}
@@ -181,6 +192,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

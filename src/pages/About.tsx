@@ -1,5 +1,6 @@
 
 import { MapPin, Award, Users, Clock } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 const About = () => {
   const features = [
@@ -81,7 +82,7 @@ const About = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['Kitui', 'Embu', 'Mombasa', 'Kisumu'].map((location) => (
               <div key={location} className="bg-red-50 p-4 rounded-lg">
-                <MapPin className="w-6 h-6 text-red-600 mx-auto mb-2" />
+                <MapPin className="w-6 h-6 text-red-600 mx-auto mb-2 animate-pulse" />
                 <span className="font-medium text-gray-900">{location}</span>
               </div>
             ))}
@@ -89,6 +90,8 @@ const About = () => {
           <p className="text-gray-600 mt-6">And surrounding areas</p>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

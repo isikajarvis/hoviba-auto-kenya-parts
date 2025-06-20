@@ -1,10 +1,36 @@
 
 import { useEffect, useState } from 'react';
-import { Car } from 'lucide-react';
 
 const BrandSlider = () => {
   const brands = [
-    'Nissan', 'Subaru', 'Honda', 'Mitsubishi', 'Mazda', 'Toyota', 'Isuzu'
+    { 
+      name: 'Nissan', 
+      logo: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Subaru', 
+      logo: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Honda', 
+      logo: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Mitsubishi', 
+      logo: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Mazda', 
+      logo: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Toyota', 
+      logo: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=150&h=150&fit=crop&crop=center'
+    },
+    { 
+      name: 'Isuzu', 
+      logo: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=150&h=150&fit=crop&crop=center'
+    }
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -33,13 +59,17 @@ const BrandSlider = () => {
         <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-7 gap-6">
           {brands.map((brand, index) => (
             <div
-              key={brand}
+              key={brand.name}
               className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow"
             >
-              <div className="w-16 h-16 mx-auto mb-3 bg-red-100 rounded-full flex items-center justify-center">
-                <Car className="w-8 h-8 text-red-600" />
+              <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden">
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <h3 className="font-semibold text-gray-900">{brand}</h3>
+              <h3 className="font-semibold text-gray-900">{brand.name}</h3>
             </div>
           ))}
         </div>
@@ -49,13 +79,17 @@ const BrandSlider = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {getVisibleBrands().map((brand) => (
               <div
-                key={brand}
+                key={brand.name}
                 className="bg-white rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
-                  <Car className="w-6 h-6 text-red-600" />
+                <div className="w-12 h-12 mx-auto mb-2 rounded-full overflow-hidden">
+                  <img 
+                    src={brand.logo} 
+                    alt={brand.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="font-semibold text-gray-900 text-sm">{brand}</h3>
+                <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
               </div>
             ))}
           </div>

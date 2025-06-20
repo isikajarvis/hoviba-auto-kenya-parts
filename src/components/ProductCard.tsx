@@ -8,7 +8,7 @@ interface ProductCardProps {
 const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-48 bg-gray-200 flex items-center justify-center">
+      <div className="h-48 bg-gray-200">
         {imageUrl ? (
           <img 
             src={imageUrl} 
@@ -16,11 +16,13 @@ const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="text-gray-400 text-center">
-            <div className="w-16 h-16 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
-              <span className="text-red-600 text-2xl font-bold">H</span>
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="text-gray-400 text-center">
+              <div className="w-16 h-16 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
+                <span className="text-red-600 text-2xl font-bold">H</span>
+              </div>
+              <span className="text-sm">Product Image</span>
             </div>
-            <span className="text-sm">Product Image</span>
           </div>
         )}
       </div>

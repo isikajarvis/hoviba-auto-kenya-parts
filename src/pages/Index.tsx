@@ -1,9 +1,12 @@
 
 import BrandSlider from '@/components/BrandSlider';
 import ContactButtons from '@/components/ContactButtons';
+import Footer from '@/components/Footer';
 import { MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const navigate = useNavigate();
   const branches = ['Kitui', 'Embu', 'Mombasa', 'Kisumu', 'And surrounding areas'];
 
   return (
@@ -17,7 +20,10 @@ const Index = () => {
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             Quality Car & Motorcycle Spare Parts Across Kenya
           </p>
-          <button className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+          <button 
+            onClick={() => navigate('/products')}
+            className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+          >
             Explore Products
           </button>
         </div>
@@ -50,13 +56,15 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {branches.map((branch, index) => (
               <div key={index} className="flex items-center space-x-2 p-3 bg-red-50 rounded-lg">
-                <MapPin className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <MapPin className="w-5 h-5 text-red-600 flex-shrink-0 animate-pulse" />
                 <span className="text-gray-900 font-medium text-sm">{branch}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
