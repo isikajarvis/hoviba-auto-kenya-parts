@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Phone, MessageCircle, Instagram, Facebook, MapPin, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -29,6 +28,7 @@ const Contact = () => {
       description: "Your email client should open with the message pre-filled.",
     });
     
+    // Reset form
     setFormData({ name: '', phone: '', email: '', message: '' });
   };
 
