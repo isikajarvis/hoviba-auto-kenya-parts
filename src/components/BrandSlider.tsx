@@ -5,59 +5,59 @@ const BrandSlider = () => {
   const brands = [
     { 
       name: 'Toyota', 
-      logo: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Toyota-Logo.png'
     },
     { 
       name: 'Nissan', 
-      logo: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Nissan-Logo.png'
     },
     { 
       name: 'Honda', 
-      logo: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Honda-Logo.png'
     },
     { 
       name: 'Subaru', 
-      logo: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Subaru-Logo.png'
     },
     { 
       name: 'Mitsubishi', 
-      logo: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mitsubishi-Logo.png'
     },
     { 
       name: 'Mazda', 
-      logo: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mazda-Logo.png'
     },
     { 
       name: 'Isuzu', 
-      logo: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Isuzu-Logo.png'
     },
     { 
       name: 'Suzuki', 
-      logo: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Suzuki-Logo.png'
     },
     { 
       name: 'Volkswagen', 
-      logo: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Volkswagen-Logo.png'
     },
     { 
       name: 'Mercedes-Benz', 
-      logo: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mercedes-Logo.png'
     },
     { 
       name: 'BMW', 
-      logo: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/BMW-Logo.png'
     },
     { 
       name: 'Hyundai', 
-      logo: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Hyundai-Logo.png'
     },
     { 
       name: 'Kia', 
-      logo: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Kia-Logo.png'
     },
     { 
       name: 'Ford', 
-      logo: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=100&h=100&fit=crop&crop=center'
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Ford-Logo.png'
     }
   ];
 
@@ -90,11 +90,11 @@ const BrandSlider = () => {
               key={brand.name}
               className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow"
             >
-              <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full">
+              <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center bg-white rounded-full">
                 <img 
                   src={brand.logo} 
-                  alt={brand.name}
-                  className="max-w-full max-h-full object-contain rounded-full"
+                  alt={`${brand.name} logo`}
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
@@ -109,11 +109,11 @@ const BrandSlider = () => {
               key={brand.name}
               className="bg-white rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-shadow"
             >
-              <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center bg-gray-100 rounded-full">
+              <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center bg-white rounded-full">
                 <img 
                   src={brand.logo} 
-                  alt={brand.name}
-                  className="max-w-full max-h-full object-contain rounded-full"
+                  alt={`${brand.name} logo`}
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
@@ -128,11 +128,11 @@ const BrandSlider = () => {
               key={brand.name}
               className="bg-white rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-shadow"
             >
-              <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center bg-gray-100 rounded-full">
+              <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center bg-white rounded-full">
                 <img 
                   src={brand.logo} 
-                  alt={brand.name}
-                  className="max-w-full max-h-full object-contain rounded-full"
+                  alt={`${brand.name} logo`}
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
