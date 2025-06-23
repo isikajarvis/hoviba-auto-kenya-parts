@@ -1,41 +1,8 @@
-import { useState } from 'react';
-import { Phone, MessageCircle, Instagram, Facebook, MapPin, Mail } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+
+import { Phone, MessageCircle, Instagram, Facebook, MapPin } from 'lucide-react';
 import Footer from '@/components/Footer';
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Create mailto link with form data
-    const subject = `Contact Form Submission from ${formData.name}`;
-    const body = `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-    const mailtoLink = `mailto:hovibauto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Email Client Opened!",
-      description: "Your email client should open with the message pre-filled.",
-    });
-    
-    // Reset form
-    setFormData({ name: '', phone: '', email: '', message: '' });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const contacts = [
     {
       name: 'Call Us',
@@ -72,24 +39,24 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Contact Us</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="max-w-4xl mx-auto">
           {/* Contact Information */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Get in Touch</h2>
             
             {/* Contact Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {contacts.map((contact) => (
                 <button
                   key={contact.name}
                   onClick={contact.action}
-                  className={`${contact.className} text-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 text-left`}
+                  className={`${contact.className} text-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 text-center`}
                 >
-                  <div className="flex items-center space-x-3 mb-2">
-                    <contact.icon className="w-6 h-6" />
+                  <div className="flex flex-col items-center space-y-3">
+                    <contact.icon className="w-8 h-8" />
                     <span className="font-semibold">{contact.name}</span>
+                    <p className="text-sm opacity-90">{contact.info}</p>
                   </div>
-                  <p className="text-sm opacity-90">{contact.info}</p>
                 </button>
               ))}
             </div>
@@ -117,78 +84,6 @@ const Contact = () => {
                 <p className="text-sm text-gray-500 mt-2">And surrounding areas</p>
               </div>
             </div>
-          </div>
-
-          {/* Contact Form */}
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-red-600 text-white py-3 px-4 rounded-md hover:bg-red-700 transition-colors font-medium"
-              >
-                Send Message
-              </button>
-            </form>
           </div>
         </div>
       </div>
