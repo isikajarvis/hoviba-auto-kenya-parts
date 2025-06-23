@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 
 const BrandSlider = () => {
@@ -58,6 +57,30 @@ const BrandSlider = () => {
     { 
       name: 'Ford', 
       logo: 'https://logos-world.net/wp-content/uploads/2020/04/Ford-Logo.png'
+    },
+    { 
+      name: 'Peugeot', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Peugeot-Logo.png'
+    },
+    { 
+      name: 'Volvo', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Volvo-Logo.png'
+    },
+    { 
+      name: 'Audi', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Audi-Logo.png'
+    },
+    { 
+      name: 'Land Rover', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Land-Rover-Logo.png'
+    },
+    { 
+      name: 'Jeep', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Jeep-Logo.png'
+    },
+    { 
+      name: 'Lexus', 
+      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Lexus-Logo.png'
     }
   ];
 
@@ -85,7 +108,7 @@ const BrandSlider = () => {
         
         {/* Desktop View - Show all brands in a grid */}
         <div className="hidden lg:grid lg:grid-cols-7 gap-6">
-          {brands.slice(0, 14).map((brand, index) => (
+          {brands.slice(0, 20).map((brand, index) => (
             <div
               key={brand.name}
               className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow"
