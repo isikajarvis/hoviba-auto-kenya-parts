@@ -1,86 +1,87 @@
+
 import { useEffect, useState } from 'react';
 
 const BrandSlider = () => {
   const brands = [
     { 
       name: 'Toyota', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Toyota-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/toyota-6.svg'
     },
     { 
       name: 'Nissan', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Nissan-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/nissan-6.svg'
     },
     { 
       name: 'Honda', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Honda-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/honda-2.svg'
     },
     { 
       name: 'Subaru', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Subaru-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/subaru-2.svg'
     },
     { 
       name: 'Mitsubishi', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mitsubishi-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/mitsubishi-motors-1.svg'
     },
     { 
       name: 'Mazda', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mazda-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/mazda-2.svg'
     },
     { 
       name: 'Isuzu', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Isuzu-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/isuzu-1.svg'
     },
     { 
       name: 'Suzuki', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Suzuki-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/suzuki-3.svg'
     },
     { 
       name: 'Volkswagen', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Volkswagen-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/volkswagen-vw.svg'
     },
     { 
       name: 'Mercedes-Benz', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Mercedes-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/mercedes-benz-9.svg'
     },
     { 
       name: 'BMW', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/BMW-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/bmw.svg'
     },
     { 
       name: 'Hyundai', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Hyundai-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/hyundai-motor-company.svg'
     },
     { 
       name: 'Kia', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Kia-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/kia-motors-1.svg'
     },
     { 
       name: 'Ford', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Ford-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/ford-6.svg'
     },
     { 
       name: 'Peugeot', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Peugeot-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/peugeot-2.svg'
     },
     { 
       name: 'Volvo', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Volvo-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/volvo-1.svg'
     },
     { 
       name: 'Audi', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Audi-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/audi-4.svg'
     },
     { 
       name: 'Land Rover', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Land-Rover-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/land-rover.svg'
     },
     { 
       name: 'Jeep', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Jeep-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/jeep-1.svg'
     },
     { 
       name: 'Lexus', 
-      logo: 'https://logos-world.net/wp-content/uploads/2020/04/Lexus-Logo.png'
+      logo: 'https://cdn.worldvectorlogo.com/logos/lexus-1.svg'
     }
   ];
 
@@ -118,6 +119,10 @@ const BrandSlider = () => {
                   src={brand.logo} 
                   alt={`${brand.name} logo`}
                   className="max-w-full max-h-full object-contain"
+                  onError={(e) => {
+                    console.log(`Failed to load logo for ${brand.name}`);
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
@@ -137,6 +142,10 @@ const BrandSlider = () => {
                   src={brand.logo} 
                   alt={`${brand.name} logo`}
                   className="max-w-full max-h-full object-contain"
+                  onError={(e) => {
+                    console.log(`Failed to load logo for ${brand.name}`);
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
@@ -156,6 +165,10 @@ const BrandSlider = () => {
                   src={brand.logo} 
                   alt={`${brand.name} logo`}
                   className="max-w-full max-h-full object-contain"
+                  onError={(e) => {
+                    console.log(`Failed to load logo for ${brand.name}`);
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
               <h3 className="font-semibold text-gray-900 text-sm">{brand.name}</h3>
