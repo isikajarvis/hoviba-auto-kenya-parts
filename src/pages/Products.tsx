@@ -1,64 +1,73 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/Footer';
 import { Car, Bike, Bus, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useSearchParams } from 'react-router-dom';
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState('cars');
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams] = useSearchParams();
+
+  // Initialize search query from URL parameters
+  useEffect(() => {
+    const urlSearch = searchParams.get('search');
+    if (urlSearch) {
+      setSearchQuery(urlSearch);
+    }
+  }, [searchParams]);
 
   const carProducts = [
     {
       name: 'Engine & Air Filters',
       description: 'Reliable filters for cleaner engine performance, ideal for rural/dusty roads.',
-      imageUrl: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=400&h=300&fit=crop'
     },
     {
       name: 'Oil & Lubricants',
       description: 'Premium motor oils, gearbox fluids, brake fluids for smooth operation.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Spark Plugs & Ignition Components',
       description: 'Improve engine ignition and fuel efficiency.',
-      imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=400&h=300&fit=crop'
     },
     {
       name: 'Brake Pads & Discs',
       description: 'Designed for safety on Kenya\'s rough terrains.',
-      imageUrl: 'https://images.unsplash.com/photo-1609743820088-592b041b5649?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1609743820088-592b041b5649?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Headlights, Tail-lights & Bulbs',
       description: 'Essential visibility components.',
-      imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Batteries',
       description: 'Long-lasting power for all vehicle types.',
-      imageUrl: 'https://images.unsplash.com/photo-1609097094593-8b6c7ccb8c92?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1609097094593-8b6c7ccb8c92?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Fuses & Minor Electricals',
       description: 'Budget-friendly, high-need items.',
-      imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop'
     },
     {
       name: 'Radiators & Hoses',
       description: 'Prevent overheating and coolant leaks.',
-      imageUrl: 'https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Shock Absorbers & Suspension Bushings',
       description: 'For better handling on rough roads.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618996-fcd4c3d53819?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1558618996-fcd4c3d53819?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Tyres & Tubes',
       description: 'Durable and road-tested for Kenyan conditions.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center'
     }
   ];
 
@@ -66,32 +75,32 @@ const Products = () => {
     {
       name: 'Tyres & Inner Tubes',
       description: 'Durable motorcycle tyres and tubes for all terrains.',
-      imageUrl: 'https://images.unsplash.com/photo-1609741199743-db6ead2b9b72?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1609741199743-db6ead2b9b72?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Brake Pads & Cables',
       description: 'Essential braking components for safety.',
-      imageUrl: 'https://images.unsplash.com/photo-1609743820088-592b041b5649?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1625047508936-ccfa7c2db5a5?w=400&h=300&fit=crop'
     },
     {
       name: 'Clutch & Gear Levers',
       description: 'Smooth gear shifting components.',
-      imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&h=300&fit=crop'
     },
     {
       name: 'Chains & Sprockets',
       description: 'High-quality drive train components.',
-      imageUrl: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop&crop=center'
     },
     {
       name: 'Headlights & Mirrors',
       description: 'Visibility and safety accessories.',
-      imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=top'
     },
     {
       name: 'Seats, Shocks & Helmets',
       description: 'Comfort and safety essentials.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618996-fcd4c3d53819?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400&h=300&fit=crop'
     }
   ];
 
@@ -99,27 +108,27 @@ const Products = () => {
     {
       name: 'Engine & Fuel Filters',
       description: 'Heavy-duty filters for commercial vehicle engines.',
-      imageUrl: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=400&h=300&fit=crop&crop=top'
     },
     {
       name: 'Brake Pads & Discs',
       description: 'Commercial-grade braking systems.',
-      imageUrl: 'https://images.unsplash.com/photo-1609743820088-592b041b5649?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1609743820088-592b041b5649?w=400&h=300&fit=crop&crop=top'
     },
     {
       name: 'Suspension Units',
       description: 'Heavy-duty suspension for passenger transport.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618996-fcd4c3d53819?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1558618996-fcd4c3d53819?w=400&h=300&fit=crop&crop=top'
     },
     {
       name: 'Headlights, Tail-lights & Bulbs',
       description: 'Commercial vehicle lighting solutions.',
-      imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&crop=top'
     },
     {
       name: 'Tires',
       description: 'Commercial-grade tires for passenger vehicles.',
-      imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1606577924006-27d39b132ae2?w=400&h=300&fit=crop'
     }
   ];
 

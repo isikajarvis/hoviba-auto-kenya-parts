@@ -2,12 +2,22 @@
 import BrandSlider from '@/components/BrandSlider';
 import ContactButtons from '@/components/ContactButtons';
 import Footer from '@/components/Footer';
-import { MapPin } from 'lucide-react';
+import { MapPin, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
   const branches = ['Kitui', 'Embu', 'Mombasa', 'Kisumu', 'And surrounding areas'];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -20,6 +30,23 @@ const Index = () => {
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             Quality Car & Motorcycle Spare Parts Across Kenya
           </p>
+          
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-md mx-auto mb-8">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Search for spare parts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-3 w-full text-gray-900"
+              />
+            </div>
+          </form>
+
           <button 
             onClick={() => navigate('/products')}
             className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
