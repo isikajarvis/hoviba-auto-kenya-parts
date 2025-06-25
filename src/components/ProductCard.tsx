@@ -6,6 +6,12 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
+  const handleInquire = () => {
+    const message = `Hi! I'm interested in learning more about ${name}. ${description}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="h-48 bg-gray-200">
@@ -29,7 +35,10 @@ const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
       <div className="p-4">
         <h3 className="font-semibold text-gray-900 mb-2">{name}</h3>
         <p className="text-gray-600 text-sm">{description}</p>
-        <button className="mt-3 w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors">
+        <button 
+          onClick={handleInquire}
+          className="mt-3 w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
+        >
           Inquire Now
         </button>
       </div>
