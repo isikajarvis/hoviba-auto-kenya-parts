@@ -1,10 +1,13 @@
+
 import { useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/Footer';
-import { Car, Bike, Bus } from 'lucide-react';
+import { Car, Bike, Bus, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState('cars');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const carProducts = [
     {
@@ -126,42 +129,102 @@ const Products = () => {
     { id: 'matatus', name: 'Matatus', icon: Bus, products: matatuProducts }
   ];
 
-  const activeProducts = tabs.find(tab => tab.id === activeTab)?.products || [];
+  // Get all products from all categories for search
+  const allProducts = [
+    ...carProducts.map(p => ({ ...p, category: 'cars' })),
+    ...motorcycleProducts.map(p => ({ ...p, category: 'motorcycles' })),
+    ...matatuProducts.map(p => ({ ...p, category: 'matatus' }))
+  ];
+
+  // Filter products based on search query
+  const getFilteredProducts = () => {
+    if (!searchQuery.trim()) {
+      return tabs.find(tab => tab.id === activeTab)?.products || [];
+    }
+    
+    const filtered = allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    
+    return filtered;
+  };
+
+  const filteredProducts = getFilteredProducts();
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Products</h1>
         
-        {/* Tab Navigation */}
-        <div className="flex flex-wrap justify-center mb-8 border-b border-gray-200">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-6 py-3 text-sm font-medium border-b-2 transition-all ${
-                activeTab === tab.id
-                  ? 'border-red-600 text-red-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              <tab.icon className="w-5 h-5" />
-              <span>{tab.name}</span>
-            </button>
-          ))}
+        {/* Search Bar */}
+        <div className="relative max-w-md mx-auto mb-8">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+          <Input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 pr-4 py-2 w-full"
+          />
         </div>
+
+        {/* Tab Navigation - Hide when searching */}
+        {!searchQuery.trim() && (
+          <div className="flex flex-wrap justify-center mb-8 border-b border-gray-200">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center space-x-2 px-6 py-3 text-sm font-medium border-b-2 transition-all ${
+                  activeTab === tab.id
+                    ? 'border-red-600 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <tab.icon className="w-5 h-5" />
+                <span>{tab.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Search Results Info */}
+        {searchQuery.trim() && (
+          <div className="mb-6 text-center">
+            <p className="text-gray-600">
+              {filteredProducts.length === 0 
+                ? `No products found for "${searchQuery}"` 
+                : `Found ${filteredProducts.length} product(s) for "${searchQuery}"`
+              }
+            </p>
+          </div>
+        )}
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {activeProducts.map((product, index) => (
+          {filteredProducts.map((product, index) => (
             <ProductCard
-              key={index}
+              key={`${product.name}-${index}`}
               name={product.name}
               description={product.description}
               imageUrl={product.imageUrl}
             />
           ))}
         </div>
+
+        {/* No Results Message */}
+        {filteredProducts.length === 0 && searchQuery.trim() && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <Search className="w-16 h-16 mx-auto mb-4" />
+              <p className="text-lg">No products found</p>
+              <p className="text-sm">Try searching with different keywords</p>
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
