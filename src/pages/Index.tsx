@@ -81,48 +81,46 @@ const Index = () => {
           </p>
           
           {/* Search Bar with Autocomplete */}
-          <div className="max-w-md mx-auto mb-8">
-            <Popover open={isSearchOpen && filteredSuggestions.length > 0} onOpenChange={setIsSearchOpen}>
-              <PopoverTrigger asChild>
-                <form onSubmit={handleSearch} className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <Input
-                    type="text"
-                    placeholder="Search for spare parts..."
-                    value={searchQuery}
-                    onChange={handleInputChange}
-                    onFocus={() => searchQuery.trim() && setIsSearchOpen(true)}
-                    className="pl-10 pr-4 py-3 w-full text-gray-900"
-                  />
-                </form>
-              </PopoverTrigger>
-              <PopoverContent className="w-full p-0 bg-white border border-gray-200 shadow-lg" align="start">
-                <Command>
-                  <CommandList>
-                    <CommandEmpty>No products found.</CommandEmpty>
-                    <CommandGroup>
-                      {filteredSuggestions.map((product, index) => (
-                        <CommandItem
-                          key={index}
-                          onSelect={() => handleSuggestionClick(product.name)}
-                          className="cursor-pointer hover:bg-gray-100 px-4 py-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <Search className="h-4 w-4 text-gray-400" />
-                            <div>
-                              <div className="font-medium text-gray-900">{product.name}</div>
-                              <div className="text-sm text-gray-500">{product.category}</div>
-                            </div>
+          <div className="max-w-md mx-auto mb-8 relative">
+            <form onSubmit={handleSearch} className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Search for spare parts..."
+                value={searchQuery}
+                onChange={handleInputChange}
+                className="pl-10 pr-4 py-3 w-full text-gray-900"
+              />
+            </form>
+            
+            {/* Dropdown suggestions */}
+            {isSearchOpen && filteredSuggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                <div className="max-h-60 overflow-y-auto">
+                  {filteredSuggestions.length === 0 ? (
+                    <div className="px-4 py-2 text-gray-500">No products found.</div>
+                  ) : (
+                    filteredSuggestions.map((product, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleSuggestionClick(product.name)}
+                        className="cursor-pointer hover:bg-gray-100 px-4 py-2 border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <Search className="h-4 w-4 text-gray-400" />
+                          <div>
+                            <div className="font-medium text-gray-900">{product.name}</div>
+                            <div className="text-sm text-gray-500">{product.category}</div>
                           </div>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           <button 
