@@ -13,7 +13,6 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const [selectedCarBrand, setSelectedCarBrand] = useState('');
-  const [selectedCarModel, setSelectedCarModel] = useState('');
   const [selectedCarYear, setSelectedCarYear] = useState('');
   const [showAvailabilityMessage, setShowAvailabilityMessage] = useState(false);
   const [searchParams] = useSearchParams();
@@ -31,16 +30,6 @@ const Products = () => {
     'Isuzu', 'Mercedes-Benz', 'BMW', 'Audi', 'Volkswagen', 'Peugeot', 'Ford',
     'Hyundai', 'Kia', 'Land Rover', 'Volvo', 'Renault', 'Chevrolet'
   ];
-
-  const carModels = {
-    'Toyota': ['Corolla', 'Camry', 'Vitz', 'Probox', 'Fielder', 'Axio', 'Mark X', 'Harrier', 'Prado', 'Hilux'],
-    'Nissan': ['Sunny', 'March', 'Note', 'Tiida', 'X-Trail', 'Navara', 'Patrol'],
-    'Mazda': ['Demio', 'Axela', 'Atenza', 'CX-5', 'BT-50'],
-    'Mitsubishi': ['Lancer', 'Outlander', 'Pajero', 'L200'],
-    'Honda': ['Fit', 'Civic', 'Accord', 'CR-V', 'Pilot'],
-    'Suzuki': ['Swift', 'Alto', 'Vitara', 'Jimny'],
-    'Default': ['Select a brand first']
-  };
 
   // Generate years from 1990 to current year
   const years = Array.from({ length: new Date().getFullYear() - 1989 }, (_, i) => String(new Date().getFullYear() - i));
@@ -214,13 +203,13 @@ const Products = () => {
   };
 
   const handleSelectVehicle = () => {
-    if (selectedCarBrand && selectedCarModel && selectedCarYear) {
+    if (selectedCarBrand && selectedCarYear) {
       setShowAvailabilityMessage(true);
       setTimeout(() => setShowAvailabilityMessage(false), 5000);
     }
   };
 
-  const isSelectionComplete = selectedCarBrand && selectedCarModel && selectedCarYear;
+  const isSelectionComplete = selectedCarBrand && selectedCarYear;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -262,7 +251,7 @@ const Products = () => {
         {/* Universal Car Selector */}
         <div className="bg-green-50 p-6 rounded-lg border border-green-200 mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Your Vehicle - Parts Available for All Cars!</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <Label htmlFor="car-brand">Vehicle Brand</Label>
               <Select onValueChange={setSelectedCarBrand}>
@@ -276,24 +265,10 @@ const Products = () => {
                 </SelectContent>
               </Select>
             </div>
-            
-            <div>
-              <Label htmlFor="car-model">Vehicle Model</Label>
-              <Select onValueChange={setSelectedCarModel} disabled={!selectedCarBrand}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select model" />
-                </SelectTrigger>
-                <SelectContent>
-                  {(selectedCarBrand ? carModels[selectedCarBrand as keyof typeof carModels] || carModels.Default : carModels.Default).map(model => (
-                    <SelectItem key={model} value={model}>{model}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
 
             <div>
               <Label htmlFor="car-year">Vehicle Year</Label>
-              <Select onValueChange={setSelectedCarYear} disabled={!selectedCarModel}>
+              <Select onValueChange={setSelectedCarYear} disabled={!selectedCarBrand}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select year" />
                 </SelectTrigger>
@@ -317,8 +292,8 @@ const Products = () => {
 
             {showAvailabilityMessage && (
               <div className="bg-green-100 text-green-800 p-4 rounded-lg flex-1 ml-4">
-                <p className="font-medium">✅ Great! Parts are available for your {selectedCarBrand} {selectedCarModel} {selectedCarYear}</p>
-                <p className="text-sm mt-1">Browse our products below to find what you need.</p>
+                <p className="font-medium">✅ Parts are available for {selectedCarBrand}!</p>
+                <p className="text-sm mt-1">Browse our products below to see what we have.</p>
               </div>
             )}
           </div>
