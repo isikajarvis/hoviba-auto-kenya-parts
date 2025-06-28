@@ -1,13 +1,10 @@
 
 import WishlistButton from './WishlistButton';
-import StockIndicator from './StockIndicator';
 
 interface ProductCardProps {
   name: string;
   description: string;
   imageUrl?: string;
-  stock?: number;
-  price?: number;
   rating?: number;
   reviewCount?: number;
 }
@@ -16,8 +13,6 @@ const ProductCard = ({
   name, 
   description, 
   imageUrl, 
-  stock = Math.floor(Math.random() * 20), // Random stock for demo
-  price = Math.floor(Math.random() * 10000) + 1000, // Random price for demo
   rating = Math.round((Math.random() * 2 + 3) * 10) / 10, // Random rating 3-5
   reviewCount = Math.floor(Math.random() * 50) + 1 // Random review count
 }: ProductCardProps) => {
@@ -46,38 +41,25 @@ const ProductCard = ({
             </div>
           </div>
         )}
-        <div className="absolute top-2 right-2">
-          <StockIndicator stock={stock} />
-        </div>
       </div>
       <div className="p-4">
         <h3 className="font-semibold text-gray-900 mb-2">{name}</h3>
         <p className="text-gray-600 text-sm mb-3">{description}</p>
         
-        {/* Price and Rating */}
-        <div className="flex justify-between items-center mb-3">
-          <div className="text-lg font-bold text-red-600">
-            KSh {price.toLocaleString()}
-          </div>
-          <div className="flex items-center space-x-1 text-sm text-gray-600">
-            <span className="text-yellow-400">★</span>
-            <span>{rating}</span>
-            <span>({reviewCount})</span>
-          </div>
+        {/* Rating */}
+        <div className="flex items-center space-x-1 text-sm text-gray-600 mb-3">
+          <span className="text-yellow-400">★</span>
+          <span>{rating}</span>
+          <span>({reviewCount})</span>
         </div>
         
         {/* Action Buttons */}
         <div className="space-y-2">
           <button 
             onClick={handleInquire}
-            disabled={stock === 0}
-            className={`w-full py-2 px-4 rounded transition-colors ${
-              stock === 0 
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-red-600 text-white hover:bg-red-700'
-            }`}
+            className="w-full py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700 transition-colors"
           >
-            {stock === 0 ? 'Out of Stock' : 'Inquire Now'}
+            Inquire Now
           </button>
           <WishlistButton productName={name} className="w-full" />
         </div>

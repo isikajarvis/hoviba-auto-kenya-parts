@@ -1,16 +1,19 @@
+
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/Footer';
-import ProductFilters, { FilterState } from '@/components/ProductFilters';
-import CompatibilityChecker from '@/components/CompatibilityChecker';
-import { Car, Bike, Bus, Search } from 'lucide-react';
+import { Car, Bike, Bus, Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { useSearchParams } from 'react-router-dom';
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState('cars');
   const [searchQuery, setSearchQuery] = useState('');
-  const [filters, setFilters] = useState<FilterState>({});
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [selectedCarBrand, setSelectedCarBrand] = useState('');
+  const [selectedCarModel, setSelectedCarModel] = useState('');
   const [searchParams] = useSearchParams();
 
   // Initialize search query from URL parameters
@@ -20,6 +23,22 @@ const Products = () => {
       setSearchQuery(urlSearch);
     }
   }, [searchParams]);
+
+  const carBrands = [
+    'Toyota', 'Nissan', 'Mazda', 'Mitsubishi', 'Honda', 'Suzuki', 'Subaru', 
+    'Isuzu', 'Mercedes-Benz', 'BMW', 'Audi', 'Volkswagen', 'Peugeot', 'Ford',
+    'Hyundai', 'Kia', 'Land Rover', 'Volvo', 'Renault', 'Chevrolet'
+  ];
+
+  const carModels = {
+    'Toyota': ['Corolla', 'Camry', 'Vitz', 'Probox', 'Fielder', 'Axio', 'Mark X', 'Harrier', 'Prado', 'Hilux'],
+    'Nissan': ['Sunny', 'March', 'Note', 'Tiida', 'X-Trail', 'Navara', 'Patrol'],
+    'Mazda': ['Demio', 'Axela', 'Atenza', 'CX-5', 'BT-50'],
+    'Mitsubishi': ['Lancer', 'Outlander', 'Pajero', 'L200'],
+    'Honda': ['Fit', 'Civic', 'Accord', 'CR-V', 'Pilot'],
+    'Suzuki': ['Swift', 'Alto', 'Vitara', 'Jimny'],
+    'Default': ['Select a brand first']
+  };
 
   const carProducts = [
     {
@@ -148,7 +167,7 @@ const Products = () => {
     ...matatuProducts.map(p => ({ ...p, category: 'matatus' }))
   ];
 
-  // Filter products based on search query and filters
+  // Filter products based on search query
   const getFilteredProducts = () => {
     let products = searchQuery.trim() 
       ? allProducts.filter(product =>
@@ -157,24 +176,44 @@ const Products = () => {
         )
       : tabs.find(tab => tab.id === activeTab)?.products || [];
     
-    // Apply additional filters (in a real app, these would be more sophisticated)
-    if (filters.category) {
-      products = products.filter(product => 
-        product.name.toLowerCase().includes(filters.category!.toLowerCase())
-      );
-    }
-    
     return products;
   };
 
+  // Get search suggestions
+  const getSearchSuggestions = () => {
+    if (!searchQuery.trim()) return [];
+    
+    return allProducts
+      .filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .slice(0, 5);
+  };
+
   const filteredProducts = getFilteredProducts();
+  const searchSuggestions = getSearchSuggestions();
+
+  const handleSearchFocus = () => {
+    setShowSearchDropdown(true);
+  };
+
+  const handleSearchBlur = () => {
+    // Delay hiding to allow click on suggestions
+    setTimeout(() => setShowSearchDropdown(false), 200);
+  };
+
+  const handleSuggestionClick = (suggestion: any) => {
+    setSearchQuery(suggestion.name);
+    setShowSearchDropdown(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Our Products</h1>
         
-        {/* Search Bar */}
+        {/* Search Bar with Dropdown */}
         <div className="relative max-w-md mx-auto mb-8">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="h-5 w-5 text-gray-400" />
@@ -184,15 +223,68 @@ const Products = () => {
             placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
             className="pl-10 pr-4 py-2 w-full"
           />
+          
+          {/* Search Dropdown */}
+          {showSearchDropdown && searchSuggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+              {searchSuggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                  onMouseDown={() => handleSuggestionClick(suggestion)}
+                >
+                  <div className="font-medium text-gray-900">{suggestion.name}</div>
+                  <div className="text-sm text-gray-600 capitalize">{suggestion.category}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Compatibility Checker */}
-        <CompatibilityChecker />
-
-        {/* Product Filters */}
-        <ProductFilters onFiltersChange={setFilters} />
+        {/* Universal Car Selector */}
+        <div className="bg-green-50 p-6 rounded-lg border border-green-200 mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Your Vehicle - Parts Available for All Cars!</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <Label htmlFor="car-brand">Vehicle Brand</Label>
+              <Select onValueChange={setSelectedCarBrand}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select brand" />
+                </SelectTrigger>
+                <SelectContent>
+                  {carBrands.map(brand => (
+                    <SelectItem key={brand} value={brand}>{brand}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="car-model">Vehicle Model</Label>
+              <Select onValueChange={setSelectedCarModel} disabled={!selectedCarBrand}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select model" />
+                </SelectTrigger>
+                <SelectContent>
+                  {(selectedCarBrand ? carModels[selectedCarBrand as keyof typeof carModels] || carModels.Default : carModels.Default).map(model => (
+                    <SelectItem key={model} value={model}>{model}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          {selectedCarBrand && selectedCarModel && (
+            <div className="bg-green-100 text-green-800 p-4 rounded-lg">
+              <p className="font-medium">✅ Great! Parts are available for your {selectedCarBrand} {selectedCarModel}</p>
+              <p className="text-sm mt-1">Browse our products below to find what you need.</p>
+            </div>
+          )}
+        </div>
 
         {/* Tab Navigation - Hide when searching */}
         {!searchQuery.trim() && (

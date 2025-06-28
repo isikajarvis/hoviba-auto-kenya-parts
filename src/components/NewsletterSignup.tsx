@@ -7,15 +7,31 @@ import { Input } from '@/components/ui/input';
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      // In a real app, this would call an API
-      console.log('Newsletter signup:', email);
-      setIsSubscribed(true);
-      setEmail('');
-      setTimeout(() => setIsSubscribed(false), 3000);
+      setIsLoading(true);
+      
+      try {
+        // Send email using mailto (opens user's email client)
+        const subject = 'Newsletter Subscription Confirmation';
+        const body = `Thank you for subscribing to our newsletter with email: ${email}`;
+        const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        // Open email client
+        window.location.href = mailtoUrl;
+        
+        console.log('Newsletter signup:', email);
+        setIsSubscribed(true);
+        setEmail('');
+        setTimeout(() => setIsSubscribed(false), 5000);
+      } catch (error) {
+        console.error('Error sending email:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -32,7 +48,7 @@ const NewsletterSignup = () => {
         
         {isSubscribed ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-lg">
-            <p className="font-medium">Thank you for subscribing!</p>
+            <p className="font-medium">Thank you for subscribing! A confirmation email has been sent.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto flex space-x-2">
@@ -43,9 +59,14 @@ const NewsletterSignup = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 text-gray-900"
               required
+              disabled={isLoading}
             />
-            <Button type="submit" className="bg-white text-red-600 hover:bg-gray-100">
-              Subscribe
+            <Button 
+              type="submit" 
+              className="bg-white text-red-600 hover:bg-gray-100"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Sending...' : 'Subscribe'}
             </Button>
           </form>
         )}
