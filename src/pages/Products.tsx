@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/Footer';
 import { Car, Bike, Bus, Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,6 +14,8 @@ const Products = () => {
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const [selectedCarBrand, setSelectedCarBrand] = useState('');
   const [selectedCarModel, setSelectedCarModel] = useState('');
+  const [selectedCarYear, setSelectedCarYear] = useState('');
+  const [showAvailabilityMessage, setShowAvailabilityMessage] = useState(false);
   const [searchParams] = useSearchParams();
 
   // Initialize search query from URL parameters
@@ -39,6 +41,9 @@ const Products = () => {
     'Suzuki': ['Swift', 'Alto', 'Vitara', 'Jimny'],
     'Default': ['Select a brand first']
   };
+
+  // Generate years from 1990 to current year
+  const years = Array.from({ length: new Date().getFullYear() - 1989 }, (_, i) => String(new Date().getFullYear() - i));
 
   const carProducts = [
     {
@@ -208,6 +213,15 @@ const Products = () => {
     setShowSearchDropdown(false);
   };
 
+  const handleSelectVehicle = () => {
+    if (selectedCarBrand && selectedCarModel && selectedCarYear) {
+      setShowAvailabilityMessage(true);
+      setTimeout(() => setShowAvailabilityMessage(false), 5000);
+    }
+  };
+
+  const isSelectionComplete = selectedCarBrand && selectedCarModel && selectedCarYear;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -248,7 +262,7 @@ const Products = () => {
         {/* Universal Car Selector */}
         <div className="bg-green-50 p-6 rounded-lg border border-green-200 mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Your Vehicle - Parts Available for All Cars!</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
               <Label htmlFor="car-brand">Vehicle Brand</Label>
               <Select onValueChange={setSelectedCarBrand}>
@@ -276,14 +290,38 @@ const Products = () => {
                 </SelectContent>
               </Select>
             </div>
+
+            <div>
+              <Label htmlFor="car-year">Vehicle Year</Label>
+              <Select onValueChange={setSelectedCarYear} disabled={!selectedCarModel}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map(year => (
+                    <SelectItem key={year} value={year}>{year}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           
-          {selectedCarBrand && selectedCarModel && (
-            <div className="bg-green-100 text-green-800 p-4 rounded-lg">
-              <p className="font-medium">✅ Great! Parts are available for your {selectedCarBrand} {selectedCarModel}</p>
-              <p className="text-sm mt-1">Browse our products below to find what you need.</p>
-            </div>
-          )}
+          <div className="flex items-center justify-between">
+            <Button 
+              onClick={handleSelectVehicle}
+              disabled={!isSelectionComplete}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Select Vehicle
+            </Button>
+
+            {showAvailabilityMessage && (
+              <div className="bg-green-100 text-green-800 p-4 rounded-lg flex-1 ml-4">
+                <p className="font-medium">✅ Great! Parts are available for your {selectedCarBrand} {selectedCarModel} {selectedCarYear}</p>
+                <p className="text-sm mt-1">Browse our products below to find what you need.</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Tab Navigation - Hide when searching */}
