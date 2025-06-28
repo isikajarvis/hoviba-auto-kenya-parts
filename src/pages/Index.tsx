@@ -2,12 +2,11 @@
 import BrandSlider from '@/components/BrandSlider';
 import ContactButtons from '@/components/ContactButtons';
 import Footer from '@/components/Footer';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import { MapPin, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -151,6 +150,9 @@ const Index = () => {
       <section className="bg-gray-50">
         <ContactButtons />
       </section>
+
+      {/* Newsletter Signup */}
+      <NewsletterSignup />
 
       {/* Branches Section */}
       <section className="py-16 bg-white">

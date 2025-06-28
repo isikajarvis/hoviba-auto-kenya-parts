@@ -1,11 +1,26 @@
 
+import WishlistButton from './WishlistButton';
+import StockIndicator from './StockIndicator';
+
 interface ProductCardProps {
   name: string;
   description: string;
   imageUrl?: string;
+  stock?: number;
+  price?: number;
+  rating?: number;
+  reviewCount?: number;
 }
 
-const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
+const ProductCard = ({ 
+  name, 
+  description, 
+  imageUrl, 
+  stock = Math.floor(Math.random() * 20), // Random stock for demo
+  price = Math.floor(Math.random() * 10000) + 1000, // Random price for demo
+  rating = Math.round((Math.random() * 2 + 3) * 10) / 10, // Random rating 3-5
+  reviewCount = Math.floor(Math.random() * 50) + 1 // Random review count
+}: ProductCardProps) => {
   const handleInquire = () => {
     const message = `Hi! I'm interested in learning more about ${name}. ${description}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
@@ -14,7 +29,7 @@ const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-48 bg-gray-200">
+      <div className="h-48 bg-gray-200 relative">
         {imageUrl ? (
           <img 
             src={imageUrl} 
@@ -31,16 +46,41 @@ const ProductCard = ({ name, description, imageUrl }: ProductCardProps) => {
             </div>
           </div>
         )}
+        <div className="absolute top-2 right-2">
+          <StockIndicator stock={stock} />
+        </div>
       </div>
       <div className="p-4">
         <h3 className="font-semibold text-gray-900 mb-2">{name}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
-        <button 
-          onClick={handleInquire}
-          className="mt-3 w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
-        >
-          Inquire Now
-        </button>
+        <p className="text-gray-600 text-sm mb-3">{description}</p>
+        
+        {/* Price and Rating */}
+        <div className="flex justify-between items-center mb-3">
+          <div className="text-lg font-bold text-red-600">
+            KSh {price.toLocaleString()}
+          </div>
+          <div className="flex items-center space-x-1 text-sm text-gray-600">
+            <span className="text-yellow-400">★</span>
+            <span>{rating}</span>
+            <span>({reviewCount})</span>
+          </div>
+        </div>
+        
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          <button 
+            onClick={handleInquire}
+            disabled={stock === 0}
+            className={`w-full py-2 px-4 rounded transition-colors ${
+              stock === 0 
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-red-600 text-white hover:bg-red-700'
+            }`}
+          >
+            {stock === 0 ? 'Out of Stock' : 'Inquire Now'}
+          </button>
+          <WishlistButton productName={name} className="w-full" />
+        </div>
       </div>
     </div>
   );

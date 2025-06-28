@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/Footer';
+import ProductFilters, { FilterState } from '@/components/ProductFilters';
+import CompatibilityChecker from '@/components/CompatibilityChecker';
 import { Car, Bike, Bus, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useSearchParams } from 'react-router-dom';
@@ -8,6 +10,7 @@ import { useSearchParams } from 'react-router-dom';
 const Products = () => {
   const [activeTab, setActiveTab] = useState('cars');
   const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState<FilterState>({});
   const [searchParams] = useSearchParams();
 
   // Initialize search query from URL parameters
@@ -145,18 +148,23 @@ const Products = () => {
     ...matatuProducts.map(p => ({ ...p, category: 'matatus' }))
   ];
 
-  // Filter products based on search query
+  // Filter products based on search query and filters
   const getFilteredProducts = () => {
-    if (!searchQuery.trim()) {
-      return tabs.find(tab => tab.id === activeTab)?.products || [];
+    let products = searchQuery.trim() 
+      ? allProducts.filter(product =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : tabs.find(tab => tab.id === activeTab)?.products || [];
+    
+    // Apply additional filters (in a real app, these would be more sophisticated)
+    if (filters.category) {
+      products = products.filter(product => 
+        product.name.toLowerCase().includes(filters.category!.toLowerCase())
+      );
     }
     
-    const filtered = allProducts.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    
-    return filtered;
+    return products;
   };
 
   const filteredProducts = getFilteredProducts();
@@ -179,6 +187,12 @@ const Products = () => {
             className="pl-10 pr-4 py-2 w-full"
           />
         </div>
+
+        {/* Compatibility Checker */}
+        <CompatibilityChecker />
+
+        {/* Product Filters */}
+        <ProductFilters onFiltersChange={setFilters} />
 
         {/* Tab Navigation - Hide when searching */}
         {!searchQuery.trim() && (
