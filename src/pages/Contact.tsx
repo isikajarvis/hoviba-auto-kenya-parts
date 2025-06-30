@@ -7,14 +7,14 @@ const Contact = () => {
     {
       name: 'Call Us',
       icon: Phone,
-      action: () => window.open('tel:+254700000000'),
+      action: () => window.open('tel:+254701036266'),
       className: 'bg-green-600 hover:bg-green-700',
-      info: '+254 700 000 000'
+      info: '+254 701 036 266'
     },
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      action: () => window.open('https://wa.me/254700000000'),
+      action: () => window.open('https://wa.me/254701036266'),
       className: 'bg-green-500 hover:bg-green-600',
       info: 'Chat with us'
     },

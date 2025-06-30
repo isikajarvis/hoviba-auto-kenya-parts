@@ -14,7 +14,7 @@ const Footer = () => {
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      action: () => window.open('https://wa.me/254700000000'),
+      action: () => window.open('https://wa.me/254701036266'),
       className: 'text-green-500 hover:text-green-600'
     },
     {

@@ -6,13 +6,13 @@ const ContactButtons = () => {
     {
       name: 'Call Us',
       icon: Phone,
-      action: () => window.open('tel:+254700000000'),
+      action: () => window.open('tel:+254701036266'),
       className: 'bg-green-600 hover:bg-green-700'
     },
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      action: () => window.open('https://wa.me/254700000000'),
+      action: () => window.open('https://wa.me/254701036266'),
       className: 'bg-green-500 hover:bg-green-600'
     },
     {
