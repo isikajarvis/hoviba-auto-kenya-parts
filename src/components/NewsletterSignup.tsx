@@ -1,41 +1,24 @@
-import { useState } from 'react';
+
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 const NewsletterSignup = () => {
-  const [phone, setPhone] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const handleSubscribe = () => {
+    // Professional WhatsApp message asking for permission to send updates
+    const message = `Hello HOVIBA AUTO,
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (phone.trim()) {
-      setIsLoading(true);
-      
-      try {
-        // Format phone number (ensure it starts with country code)
-        let formattedPhone = phone.replace(/\s+/g, '');
-        if (formattedPhone.startsWith('0')) {
-          formattedPhone = '254' + formattedPhone.substring(1);
-        } else if (!formattedPhone.startsWith('254')) {
-          formattedPhone = '254' + formattedPhone;
-        }
-        
-        // Simulate automated message sending (in a real implementation, this would be done via backend API)
-        console.log(`Automated WhatsApp message sent to ${formattedPhone} from HOVIBA (0701036266)`);
-        console.log('Message: Welcome to HOVIBA AUTO! Thank you for subscribing to our WhatsApp updates.');
-        
-        // Show success message to user
-        setIsSubscribed(true);
-        setPhone('');
-        setTimeout(() => setIsSubscribed(false), 5000);
-      } catch (error) {
-        console.error('Error processing automated WhatsApp signup:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+I would like to subscribe to your WhatsApp updates and give you permission to send me:
+• Exclusive offers and discounts
+• New product alerts  
+• Maintenance tips and guides
+• Important announcements
+
+Please add me to your WhatsApp update list.
+
+Thank you.`;
+
+    const whatsappUrl = `https://wa.me/254701036266?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -53,33 +36,15 @@ const NewsletterSignup = () => {
           <h3 className="text-2xl font-bold animate-fade-in">Stay Updated via WhatsApp</h3>
         </div>
         <p className="text-red-100 mb-6 animate-fade-in">
-          Get the latest offers, maintenance tips, and product updates delivered automatically to your WhatsApp from HOVIBA AUTO.
+          Get the latest offers, maintenance tips, and product updates delivered to your WhatsApp from HOVIBA AUTO.
         </p>
         
-        {isSubscribed ? (
-          <div className="bg-green-100 text-green-800 p-4 rounded-lg animate-scale-in">
-            <p className="font-medium">Thank you for subscribing! HOVIBA has automatically sent you a welcome message on WhatsApp.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto flex space-x-2 animate-fade-in">
-            <Input
-              type="tel"
-              placeholder="Enter your phone number (e.g., 0712345678)"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="flex-1 text-gray-900 transition-all duration-300 focus:scale-105"
-              required
-              disabled={isLoading}
-            />
-            <Button 
-              type="submit" 
-              className="bg-white text-red-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Sending...' : 'Subscribe'}
-            </Button>
-          </form>
-        )}
+        <Button 
+          onClick={handleSubscribe}
+          className="bg-white text-red-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg px-8 py-3 text-lg font-semibold"
+        >
+          Subscribe to Updates
+        </Button>
       </div>
     </div>
   );
