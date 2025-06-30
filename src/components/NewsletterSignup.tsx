@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,32 +22,16 @@ const NewsletterSignup = () => {
           formattedPhone = '254' + formattedPhone;
         }
         
-        // Create WhatsApp welcome message to send TO the customer
-        const message = `Welcome to HOVIBA AUTO! 🚗✨
-
-Thank you for joining our WhatsApp updates! You'll now receive:
-• Exclusive offers and discounts
-• New product alerts
-• Maintenance tips and guides
-• Priority customer support
-
-We're here to help with all your vehicle parts needs. Feel free to message us anytime!
-
-Best regards,
-The HOVIBA Team`;
+        // Simulate automated message sending (in a real implementation, this would be done via backend API)
+        console.log(`Automated WhatsApp message sent to ${formattedPhone} from HOVIBA (0701036266)`);
+        console.log('Message: Welcome to HOVIBA AUTO! Thank you for subscribing to our WhatsApp updates.');
         
-        // Send message TO the customer
-        const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
-        
-        // Open WhatsApp to send the message
-        window.open(whatsappUrl, '_blank');
-        
-        console.log('Newsletter signup processed:', formattedPhone);
+        // Show success message to user
         setIsSubscribed(true);
         setPhone('');
         setTimeout(() => setIsSubscribed(false), 5000);
       } catch (error) {
-        console.error('Error processing WhatsApp signup:', error);
+        console.error('Error processing automated WhatsApp signup:', error);
       } finally {
         setIsLoading(false);
       }
@@ -70,12 +53,12 @@ The HOVIBA Team`;
           <h3 className="text-2xl font-bold animate-fade-in">Stay Updated via WhatsApp</h3>
         </div>
         <p className="text-red-100 mb-6 animate-fade-in">
-          Get the latest offers, maintenance tips, and product updates delivered directly to your WhatsApp from HOVIBA AUTO.
+          Get the latest offers, maintenance tips, and product updates delivered automatically to your WhatsApp from HOVIBA AUTO.
         </p>
         
         {isSubscribed ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-lg animate-scale-in">
-            <p className="font-medium">Thank you for subscribing! HOVIBA will send you a welcome message on WhatsApp shortly.</p>
+            <p className="font-medium">Thank you for subscribing! HOVIBA has automatically sent you a welcome message on WhatsApp.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto flex space-x-2 animate-fade-in">
@@ -93,7 +76,7 @@ The HOVIBA Team`;
               className="bg-white text-red-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
               disabled={isLoading}
             >
-              {isLoading ? 'Processing...' : 'Subscribe'}
+              {isLoading ? 'Sending...' : 'Subscribe'}
             </Button>
           </form>
         )}

@@ -1,4 +1,3 @@
-
 import WishlistButton from './WishlistButton';
 
 interface ProductCardProps {
@@ -17,12 +16,16 @@ const ProductCard = ({
   reviewCount = Math.floor(Math.random() * 50) + 1 // Random review count
 }: ProductCardProps) => {
   const handleInquire = () => {
-    // Create automatic WhatsApp message from HOVIBA
+    // Get current product URL
+    const currentUrl = window.location.href;
+    
+    // Create automatic WhatsApp message from HOVIBA with product link
     const message = `Hello! Thank you for your interest in ${name} from HOVIBA AUTO.
 
 Product Details:
 - ${name}
 - ${description}
+- Product Link: ${currentUrl}
 
 We're here to help you with all your spare parts needs. Our team will get back to you shortly with pricing and availability.
 
