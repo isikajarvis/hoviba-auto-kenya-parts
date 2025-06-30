@@ -17,8 +17,21 @@ const ProductCard = ({
   reviewCount = Math.floor(Math.random() * 50) + 1 // Random review count
 }: ProductCardProps) => {
   const handleInquire = () => {
-    const message = `Hi! I'm interested in learning more about ${name}. ${description}`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    // Create automatic WhatsApp message from HOVIBA
+    const message = `Hello! Thank you for your interest in ${name} from HOVIBA AUTO.
+
+Product Details:
+- ${name}
+- ${description}
+
+We're here to help you with all your spare parts needs. Our team will get back to you shortly with pricing and availability.
+
+Thank you for choosing HOVIBA AUTO - Quality Car & Motorcycle Spare Parts Across Kenya.
+
+Best regards,
+HOVIBA Team`;
+
+    const whatsappUrl = `https://wa.me/254701036266?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
